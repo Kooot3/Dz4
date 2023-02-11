@@ -9,7 +9,7 @@ namespace DefaultNamespace
     [SerializeField] private float force = 4;
     [SerializeField] private GameObject impactPrefab;
     [SerializeField] private Transform shootPoint;
-
+    
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -19,14 +19,18 @@ namespace DefaultNamespace
                 print(hit.transform.gameObject.name);
 
                 Instantiate(impactPrefab, hit.point, Quaternion.LookRotation(hit.normal, Vector3.up));
-
-                var rigidbody = hit.transform.GetComponent<Rigidbody>();
-                if (rigidbody == null)
+                
+                var destructible = hit.transform.GetComponent<DestructibleObj>();
+                if (destructible != null)
                 {
-                    return;
+                    destructible.ReceiveDamage();
                 }
-
-                rigidbody.AddForce(shootPoint.forward * force, ForceMode.Impulse);
+                
+                var rigidbody = hit.transform.GetComponent<Rigidbody>();
+                if (rigidbody != null)
+                {
+                    rigidbody.AddForce(shootPoint.forward * force, ForceMode.Impulse);
+                }
             }
         }
     }
