@@ -5,12 +5,10 @@ namespace DefaultNamespace
     public class GrenadeThrow : MonoBehaviour
     {
 
-        [SerializeField] private float force = 100f;
-        [SerializeField] private GameObject grenadePrefab;
-        [SerializeField] private Transform throwPoint;
-       
+        public float force = 100f;
+        public GameObject grenadePrefab;
 
-        private void Update()
+        void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -19,12 +17,10 @@ namespace DefaultNamespace
         }
 
         void ThrowGrenade()
-        { 
+        {
             GameObject grenade = Instantiate(grenadePrefab, transform.position, transform.rotation);
-            var rigidbody = grenade.GetComponent<Rigidbody>();
-            {
-                rigidbody.AddForce(transform.forward * force, ForceMode.VelocityChange);
-            }
+            Rigidbody rb = grenade.GetComponent < Rigidbody>();
+            rb.AddForce(transform.forward * force, ForceMode.VelocityChange);
         }
     }
 }
