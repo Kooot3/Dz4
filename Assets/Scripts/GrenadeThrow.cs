@@ -5,22 +5,22 @@ namespace DefaultNamespace
     public class GrenadeThrow : MonoBehaviour
     {
 
-        public float force = 100f;
-        public GameObject grenadePrefab;
+        [SerializeField] private float throwForce = 100f;
+        [SerializeField] private GameObject grenadePrefab;
 
-        void Update()
+       private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(1))
             {
-                ThrowGrenade();
+                GrenadeThrowForward();
             }
         }
 
-        void ThrowGrenade()
+        private void GrenadeThrowForward()
         {
             GameObject grenade = Instantiate(grenadePrefab, transform.position, transform.rotation);
             Rigidbody rb = grenade.GetComponent < Rigidbody>();
-            rb.AddForce(transform.forward * force, ForceMode.VelocityChange);
+            rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
         }
     }
 }
